@@ -68,3 +68,12 @@ missing_amount <- 16
 l <- length(adflow.decom$random)
 acf(adflow.decom$random[missing_amount:(l - missing_amount)], main="Correlogram of adflow random component")
 # They are similar, except here there is a tendency towards positive correlation after a certain lag rather than negative. 
+
+# 5c
+www <- "https://raw.githubusercontent.com/AtefOuni/ts/master/Data/Herald.dat"
+Herald.dat <- read.table(www, header=T)
+attach(Herald.dat)
+x <- CO
+y <- Benzoa
+var(x + y) == var(x) + var(y) + 2 * cov(x, y)
+# prints TRUE.
