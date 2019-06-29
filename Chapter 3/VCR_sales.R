@@ -1,0 +1,21 @@
+T79 <- 1:10
+Tdelt <- (1:100) / 10
+Sales <- c(840, 1470, 2110, 4000, 7590, 10950, 10530, 9470, 7790, 5890)
+Cusales <- cumsum(Sales)
+Bass.nls <- nls(Sales ~ M * (((P+Q)^2 / P)* exp(-(P+Q) * T79))/(1+(Q/P) * exp(-(P + Q) * T79)) ^ 2, start=list(M=60630, P=0.03, Q=0.38))
+summary(Bass.nls)
+
+
+Bcoef <- coef(Bass.nls)
+m <- Bcoef[1]
+p <- Bcoef[2]
+q <- Bcoef[3]
+ngete <- exp(-(p+q) * Tdelt)
+Bpdf <- m * ((p + q) ^ 2 / p)*ngete / (1 + (q/p) * ngete) ^ 2
+plot(Tdelt, Bpdf, xlab="Year from 1979", ylab="Sales per year", type="l")
+points(T79, Sales)
+Bcdf <- m * (1 - ngete) / (1 + (q/p) * ngete)
+plot(Tdelt, Bcfg, xlab="Year from 1979", ylab="Cumulative sales", type="l")
+
+points(T79, Cusales)
+
